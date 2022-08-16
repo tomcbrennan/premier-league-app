@@ -5,7 +5,8 @@ import layoutStyles from '../styles/layout.module.scss'
 import Link from 'next/link';
 import Layout from '../components/Layout';
 
-export const getStaticProps = async () => {
+// This gets called on every request
+export const getServerSideProps = async () => {
     
     const options = {
         method: 'GET',
@@ -15,9 +16,14 @@ export const getStaticProps = async () => {
         }
     };
 
-    const res = await fetch('https://footapi7.p.rapidapi.com/api/tournament/17/season/41886/matches/last/0', options)
-    const data = await res.json();
     
+
+    // Fetch data from external API
+    const res = await fetch('https://footapi7.p.rapidapi.com/api/tournament/17/season/41886/matches/last/0', options)
+    const data = await res.json()
+
+    
+    // Pass data to the page via props
     return {
         props: {
             results: data
